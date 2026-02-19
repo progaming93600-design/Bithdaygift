@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Surprise</title>
+    <style>
+        :root {
+            --bg-pink: #fffafa;
+            --text-purple: #8e5481;
+            --btn-pink: #f3ddec;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg-pink);
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* --- The "Wrapping Paper" Background --- */
+        #bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .balloon {
+            position: absolute;
+            bottom: -250px;
+            /* This makes them float up and sway side-to-side */
+            animation: floatUp 8s linear infinite, sway 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0); opacity: 0; }
+            10% { opacity: 0.8; }
+            100% { transform: translateY(-130vh); opacity: 0; }
+        }
+
+        @keyframes sway {
+            0% { transform: translateX(-25px); }
+            100% { transform: translateX(25px); }
+        }
+
+        /* --- The Surprise Cards --- */
+        .card {
+            position: relative;
+            z-index: 10;
+            background: white;
+            padding: 35px;
+            border-radius: 45px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            width: 320px;
+            border: 10px solid #fff;
+        }
+
+        .main-img {
+            width: 150px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+        }
+
+        h1 { color: var(--text-purple); font-size: 24px; margin: 10px 0; }
+        p { color: #888; margin-bottom: 25px; }
+
+        .btn {
+            background: var(--btn-pink);
+            color: var(--text-purple);
+            border: none;
+            padding: 15px;
+            border-radius: 30px;
+            width: 100%;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn:active { transform: scale(0.95); }
+    </style>
+</head>
+<body>
+
+    <div id="bg"></div>
+
+    <div class="card" id="page1">
+        <img src="https://media.tenor.com/vH977C-Vv9IAAAAi/milk-and-mocha-hug.gif" class="main-img">
+        <h1>A Cutiepie was born today, 21 years ago!</h1>
+        <p>Yes, it's YOU! A little surprise awaits...</p>
+        <button class="btn" onclick="nextPage()"> Start the surprise</button>
+    </div>
+
+    <div class="card" id="page2" style="display:none;">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbnZueGswNmw2ODJmczNqemU2M201NmZ0d2ZidGFibzh6eW9wN3dtNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/iIAn87U7y89I690YI3/giphy.gif" class="main-img">
+        <h1>First of all...</h1>
+        <p style="color: var(--text-purple); font-weight: bold;">I want to tell you how amazing you are!</p>
+        <p>You make every day brighter just by being in it. </p>
+        <button class="btn" onclick="alert('Ready for the finale on Page 3?')">Next </button>
+    </div>
+
+    <script>
+        const bg = document.getElementById('bg');
+        
+        /* IMPORTANT: Make sure your balloon image file 
+           is named "balloon.jpg" and is in the same folder 
+           on GitHub as this index.html file!
+        */
+        const myBalloon = "balloon.jpg"; 
+
+        function createBalloon() {
+            const img = document.createElement('img');
+            img.src = myBalloon;
+            img.className = 'balloon';
+            img.style.left = Math.random() * 100 + "vw";
+            img.style.width = "65px";
+            
+            bg.appendChild(img);
+            
+            // Clean up to keep the browser running smoothly
+            setTimeout(() => img.remove(), 8000);
+        }
+
+        // Send a new balloon up every 1.5 seconds
+        setInterval(createBalloon, 1500);
+
+        // Function to switch cards
+        function nextPage() {
+            document.getElementById('page1').style.display = 'none';
+            document.getElementById('page2').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
